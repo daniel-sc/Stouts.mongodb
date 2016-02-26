@@ -10,6 +10,9 @@
   set_fact:
     mongodb_daemon_name: "{{mongodb_config['daemon']}}"
 
+- include: hugepage.yml
+  when: ansible_os_family == 'Debian' and mongodb_disable_hugepage
+
 - include: install.deb.yml
   when: ansible_os_family == 'Debian' and mongodb_install
 

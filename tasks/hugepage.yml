@@ -1,0 +1,24 @@
+---
+
+# see https://docs.mongodb.org/manual/tutorial/transparent-huge-pages/
+
+- name: copy disable-transparent-hugepages script
+  sudo: yes
+  copy:
+    src: disable-transparent-hugepages.sh
+    dest: /etc/init.d/disable-transparent-hugepages
+    owner: root
+    group: root
+    mode: 0755
+  register: hugepagescopy
+
+- name: configure script at startup
+  shell: update-rc.d disable-transparent-hugepages defaults
+  sudo: yes
+  when: hugepagescopy.changed
+
+- name: update hugepages now
+  shell: /etc/init.d/disable-transparent-hugepages start
+  sudo: yes
+  when: hugepagescopy.changed
+  notify: mongodb restart

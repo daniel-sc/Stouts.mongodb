@@ -2,6 +2,7 @@
 
 mongodb_enabled: yes
 mongodb_install: yes
+mongodb_disable_hugepage: no
 
 mongodb_additional_packages:
 - python-selinux
