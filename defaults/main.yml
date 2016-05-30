@@ -1,5 +1,7 @@
 ---
 
+ansible_managed: 'This file is managed by Ansible, all changes will be lost.'
+
 mongodb_enabled: yes
 mongodb_install: yes
 mongodb_disable_hugepage: no
