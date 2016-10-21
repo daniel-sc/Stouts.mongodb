@@ -6,13 +6,24 @@ mongodb_enabled: yes
 mongodb_install: yes
 mongodb_disable_hugepage: no
 
+# Install with docker
+mongodb_docker: no                              # Run mongo db as docker container
+mongodb_docker_net: bridge
+mongodb_docker_hostname: "mongodb.{{inventory_hostname}}"
+mongodb_docker_image: "mongo:{{mongodb_version}}"
+mongodb_docker_ports: ["{{mongodb_conf_bind_ip}}:{{mongodb_conf_port}}:27017"] # Set empty to disable ports forwarding
+mongodb_docker_volumes:
+- "{{mongodb_conf_dbpath}}:/data/db"
+
 mongodb_additional_packages:
 - python-selinux
 - python-pymongo
 
 mongodb_user: mongodb
+mongodb_logdir: /var/log/mongodb
 
-mongodb_version: "2.6.11"                        # Fully specified target installation version
+mongodb_version: "3.2.4"                         # Fully specified target installation version
+mongodb_transparent_hugepage_disable: false
 
 # Service setup options
 mongodb_version_config:                          # Custom configuration for major/minor version variants
@@ -23,6 +34,9 @@ mongodb_version_config:                          # Custom configuration for majo
     daemon: mongod
     config_file: mongod.conf
   v3.0:
+    daemon: mongod
+    config_file: mongod.conf
+  v3.2:
     daemon: mongod
     config_file: mongod.conf
 
@@ -36,7 +50,7 @@ mongodb_conf_httpinterface: no                    # Enable http interface
 mongodb_conf_ipv6: no                             # Enable IPv6 support (disabled by default)
 mongodb_conf_journal: no                          # Enable journaling
 mongodb_conf_logappend: yes                       # Append to logpath instead of over-writing
-mongodb_conf_logpath: /var/log/mongodb/{{ mongodb_daemon_name }}.log # Log file to send write to instead of stdout
+mongodb_conf_logpath: "{{mongodb_logdir}}/mongo.log"  # Log file to send write to instead of stdout
 mongodb_conf_maxConns: 20000                      # Max number of simultaneous connections
 mongodb_conf_noprealloc: no                       # Disable data file preallocation
 mongodb_conf_noscripting: no                      # Disable scripting engine
