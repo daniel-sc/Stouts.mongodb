@@ -50,7 +50,7 @@ mongodb_conf_httpinterface: no                    # Enable http interface
 mongodb_conf_ipv6: no                             # Enable IPv6 support (disabled by default)
 mongodb_conf_journal: no                          # Enable journaling
 mongodb_conf_logappend: yes                       # Append to logpath instead of over-writing
-mongodb_conf_logpath: "{{mongodb_logdir}}/mongo.log"  # Log file to send write to instead of stdout
+mongodb_conf_logpath: "{{mongodb_logdir}}/mongod.log"  # Log file to send write to instead of stdout
 mongodb_conf_maxConns: 20000                      # Max number of simultaneous connections
 mongodb_conf_noprealloc: no                       # Disable data file preallocation
 mongodb_conf_noscripting: no                      # Disable scripting engine
