@@ -23,7 +23,7 @@
   when: mongodb_transparent_hugepage_disable
 
 - name: Ensure mongodb is started
-  service: name={{ mongodb_daemon_name }} state=started enabled=yes
+  systemd: state=started enabled=yes name={{ mongodb_daemon_name }} daemon_reload=yes
 
 - name: Ensure mongodb_settings is started
   service: name=mongodb_settings state=started enabled=yes
